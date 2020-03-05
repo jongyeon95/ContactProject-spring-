@@ -53,12 +53,13 @@ class PersonRepositoryTest {
 
     @Test
     public void read(){
-        Optional<Person> person=personRepository.findById(1L);
+        Optional<Person> person=personRepository.findById(2L);
         person.ifPresent(
                 newPerson -> {
                     System.out.println("이름: "+newPerson.getName());
                     System.out.println("나이: "+newPerson.getAge());
                     System.out.println("번호: "+newPerson.getPhoneNumber());
+                    System.out.println("생일 : "+newPerson.getBirthday().getYear()+"년 "+newPerson.getBirthday().getMonthValue()+"월 "+newPerson.getBirthday().getDayOfMonth()+"일");
                 }
         );
     }
