@@ -2,7 +2,9 @@ package kr.co.contactproject.contact.model.entity;
 
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
@@ -34,10 +36,16 @@ public class Person {
     private LocalDate birthday;
 
     @CreatedDate
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
+
+    @CreatedBy
+    private String createdBy;
 
     @LastModifiedDate
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
+
+    @LastModifiedBy
+    private String updatedBy;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy="person")
     private List<GroupDetail> groupDetailList;
