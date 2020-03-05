@@ -62,4 +62,10 @@ class PersonRepositoryTest {
                 }
         );
     }
+    @Test
+    public void delete(){
+        Optional<Person> person=personRepository.findById(1L);
+        person.ifPresent( p-> personRepository.delete(p)
+        );
+    }
 }
