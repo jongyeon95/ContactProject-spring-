@@ -16,6 +16,8 @@ import java.util.List;
 public class PersonApiResponse {
     private Long id;
 
+    private Integer age;
+
     private LocalDate birthday;
 
     private String bloodType;
