@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonApiLogicService implements CrudInterface<PersonApiRequest, PersonApiResponse> {
+public class PersonApiLogicService extends BaseService<PersonApiRequest,PersonApiResponse,Person> {
 
-    @Autowired
-    private PersonRepository personRepository;
 
     @Override
     public Header<PersonApiResponse> create(Header<PersonApiRequest> request) {
@@ -29,7 +27,7 @@ public class PersonApiLogicService implements CrudInterface<PersonApiRequest, Pe
                 .description(body.getDescription())
                 .groupDetailList(body.getGroupDetailList())
                 .build();
-        Person newPerson=personRepository.save(person);
+        Person newPerson=baseRepository.save(person);
 
 
         return response(newPerson);
