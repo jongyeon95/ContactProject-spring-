@@ -10,6 +10,7 @@ public class CrudApiController<Req,Res,Entity> implements CrudInterface<Req,Res>
 
     @Autowired(required = false)
     protected BaseService<Req,Res,Entity> baseService;
+
     @Override
     @PostMapping("")
     public Header<Res> create(@RequestBody Header<Req> request) {
