@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/person")
-public class PersonApiController extends CrudApiController<PersonApiRequest,PersonApiResponse,Person> {
+public class PersonApiController
+        extends CrudApiController<PersonApiRequest, PersonApiResponse,Person> {
 
 }
