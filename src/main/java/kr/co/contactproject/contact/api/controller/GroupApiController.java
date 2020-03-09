@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/person")
-public class GroupApiController extends CrudApiController<GroupApiRequest, GroupApiResponse, Group> {
+@RequestMapping("/api/group")
+public class GroupApiController
+        extends CrudApiController<GroupApiRequest, GroupApiResponse, Group> {
 
 }
