@@ -1,17 +1,18 @@
 package kr.co.contactproject.contact.service;
 
-import kr.co.contactproject.contact.ifs.CrudInterface;
 import kr.co.contactproject.contact.model.entity.Person;
 import kr.co.contactproject.contact.model.network.Header;
 import kr.co.contactproject.contact.model.network.request.PersonApiRequest;
 import kr.co.contactproject.contact.model.network.response.PersonApiResponse;
-import kr.co.contactproject.contact.respository.PersonRepository;
+import kr.co.contactproject.contact.respository.GroupDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PersonApiLogicService extends BaseService<PersonApiRequest,PersonApiResponse,Person> {
 
+    @Autowired
+    private GroupDetailRepository groupDetailRepository;
 
     @Override
     public Header<PersonApiResponse> create(Header<PersonApiRequest> request) {
@@ -35,17 +36,40 @@ public class PersonApiLogicService extends BaseService<PersonApiRequest,PersonAp
 
     @Override
     public Header<PersonApiResponse> read(Long id) {
-        return null;
+        return baseRepository.findById(id).map(person -> response(person))
+                .orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
     @Override
     public Header<PersonApiResponse> update(Header<PersonApiRequest> request) {
-        return null;
+
+        PersonApiRequest body= request.getData();
+        return baseRepository.findById(request.getData().getId())
+                .map(
+                        person -> {
+                            person.setName(body.getName());
+                            person.setAge(body.getAge());
+                            person.setDescription(body.getDescription());
+                            person.setBloodType(body.getBloodType());
+                            person.setPhoneNumber(body.getPhoneNumber());
+                            person.setBirthday(body.getBirthday());
+                            return baseRepository.save(person);
+                        }
+                )
+                .map(newPerson -> response(newPerson))
+                .orElseGet(()-> Header.ERROR("데이터 없음"));
+
     }
 
     @Override
     public Header delete(Long id) {
-        return null;
+
+        return baseRepository.findById(id)
+                .map(person -> {
+                    baseRepository.delete(person);
+                    return Header.OK();})
+                .orElseGet(()->Header.ERROR("데이터 없음"));
+
     }
 
 
@@ -57,7 +81,6 @@ public class PersonApiLogicService extends BaseService<PersonApiRequest,PersonAp
                 .birthday(person.getBirthday())
                 .bloodType(person.getBloodType())
                 .description(person.getDescription())
-                .groupDetailList(person.getGroupDetailList())
                 .name(person.getName())
                 .phoneNumber(person.getPhoneNumber())
                 .build();
