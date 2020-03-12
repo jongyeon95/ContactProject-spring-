@@ -16,8 +16,8 @@ import java.util.List;
 public class GroupDetailApiResponse {
     private Long id;
 
-    private Group group;
+    private String groupName;
 
-    private Person person;
+    private String personName;
 
 }
