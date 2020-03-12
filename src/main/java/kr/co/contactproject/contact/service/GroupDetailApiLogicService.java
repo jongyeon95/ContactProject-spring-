@@ -52,12 +52,28 @@ public class GroupDetailApiLogicService
 
     @Override
     public Header<GroupDetailApiResponse> update(Header<GroupDetailApiRequest> request) {
-        return null;
+        GroupDetailApiRequest body=request.getData();
+        return baseRepository.findById(body.getId()).map(
+                gd ->{
+                    gd.setId(body.getId());
+                    gd.setGroup(groupRepository.getOne(body.getGroupId()));
+                    gd.setPerson(personRepository.getOne(body.getPersonId()));
+                    GroupDetail newGd=baseRepository.save(gd);
+                    return newGd;
+                }
+        ).map(newGd->response(newGd))
+                .orElseGet(()->Header.ERROR("데이터없음"));
+
     }
 
     @Override
     public Header delete(Long id) {
-        return null;
+        return baseRepository.findById(id).map(
+                groupDetail -> {baseRepository.delete(groupDetail);
+                return Header.OK();
+                }
+        ).orElseGet(()->Header.ERROR("데이터없음"));
+
     }
 
     public Header<GroupDetailApiResponse> response(GroupDetail groupDetail){
