@@ -26,7 +26,6 @@ public class PersonApiLogicService extends BaseService<PersonApiRequest,PersonAp
                 .bloodType(body.getBloodType())
                 .birthday(body.getBirthday())
                 .description(body.getDescription())
-                .groupDetailList(body.getGroupDetailList())
                 .build();
         Person newPerson=baseRepository.save(person);
 

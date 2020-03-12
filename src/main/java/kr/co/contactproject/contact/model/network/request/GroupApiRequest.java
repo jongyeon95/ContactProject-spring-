@@ -17,6 +17,6 @@ public class GroupApiRequest {
 
     private String description;
 
-    private GroupDetail groupDetail;
+    private Long groupDetailId;
 
 }

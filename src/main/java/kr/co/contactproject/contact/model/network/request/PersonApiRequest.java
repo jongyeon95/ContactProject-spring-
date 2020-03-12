@@ -28,6 +28,6 @@ public class PersonApiRequest {
 
     private String phoneNumber;
 
-    private List<GroupDetail> groupDetailList;
+    private List<Long> groupDetailListId;
 
 }

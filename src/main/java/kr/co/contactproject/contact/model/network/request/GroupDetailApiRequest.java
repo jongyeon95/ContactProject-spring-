@@ -18,8 +18,8 @@ import javax.persistence.OneToOne;
 public class GroupDetailApiRequest {
     private Long id;
 
-    private Group group;
+    private Long groupId;
 
-    private Person person;
+    private Long personId;
 
 }
