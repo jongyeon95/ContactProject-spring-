@@ -20,20 +20,13 @@ public class GroupDetailApiLogicService
     private GroupRepository groupRepository;
     @Override
     public Header<GroupDetailApiResponse> create(Header<GroupDetailApiRequest> request) {
-        GroupDetailApiRequest body=request.getData();
-        Optional<Group> newGroup= groupRepository.findById(body.getGroupId());
-        Optional<Person> newPerson=personRepository.findById(body.getPersonId());
 
 
-        GroupDetail groupDetail=GroupDetail.builder()
-                .group(newGroup.orElse(Group.builder().build()))
-                .person(newPerson.orElse(Person.builder().build()))
-                .build();
 
-        GroupDetail newGroupDetail= baseRepository.save(groupDetail);
-        System.out.println(newGroupDetail);
 
-        return response(newGroupDetail);
+
+
+        return null;
     }
 
     @Override

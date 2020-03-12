@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Builder
 @Accessors(chain = true)
-@ToString(exclude = {"GroupDetail"})
+@ToString(exclude = {"groupDetailList"})
 @EntityListeners(AuditingEntityListener.class)
 
 public class Person {

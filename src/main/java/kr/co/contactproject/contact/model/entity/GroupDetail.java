@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @Accessors(chain = true)
-@ToString(exclude = {"person"})
+@ToString(exclude = {"person","group"})
 @EntityListeners(AuditingEntityListener.class)
 
 public class GroupDetail {
@@ -27,7 +27,7 @@ public class GroupDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     private Group group;
 
     @ManyToOne

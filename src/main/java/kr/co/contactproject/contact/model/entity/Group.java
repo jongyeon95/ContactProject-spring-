@@ -1,9 +1,6 @@
 package kr.co.contactproject.contact.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,7 +18,9 @@ import java.time.LocalDateTime;
 @Entity
 @Builder
 @EntityListeners(AuditingEntityListener.class)
+@ToString(exclude = {"groupDetailList"})
 @Accessors(chain = true)
+@Table(name="\"group\"")
 public class Group {
 
     @Id
@@ -30,6 +30,7 @@ public class Group {
     private String name;
 
     private String description;
+
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -43,7 +44,7 @@ public class Group {
     @LastModifiedBy
     private String updatedBy;
 
-    @OneToOne
-    private GroupDetail groupDetail;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="group")
+    private List<GroupDetail> groupDetailList;
 
 }
