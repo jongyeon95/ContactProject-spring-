@@ -24,17 +24,33 @@ public class GroupApiLogicService extends BaseService<GroupApiRequest, GroupApiR
 
     @Override
     public Header<GroupApiResponse> read(Long id) {
-        return null;
+        return baseRepository.findById(id).map(group -> response(group)).orElseGet(()->Header.ERROR("데이터 없음"));
     }
 
     @Override
     public Header<GroupApiResponse> update(Header<GroupApiRequest> request) {
-        return null;
+        return baseRepository.findById(request.getData().getId()).map(
+                group -> {
+                    group.setId(request.getData().getId());
+                    group.setName(request.getData().getName());
+                    if(request.getData().getDescription()!=null){
+                    group.setDescription(request.getData().getDescription());}
+                    Group newGroup=baseRepository.save(group);
+                    return response(newGroup);
+                }
+        ).orElseGet(()->Header.ERROR("데이터 없음"));
+
     }
 
     @Override
     public Header delete(Long id) {
-        return null;
+        return baseRepository.findById(id)
+                .map(group -> {
+                    baseRepository.delete(group);
+                    return Header.OK();
+                })
+                .orElseGet(()->Header.ERROR("데이터 없음"));
+
     }
 
     public Header<GroupApiResponse> response(Group group){
@@ -42,7 +58,7 @@ public class GroupApiLogicService extends BaseService<GroupApiRequest, GroupApiR
         GroupApiResponse groupApiResponse=GroupApiResponse.builder()
                 .id(group.getId())
                 .name(group.getName())
-                .description(group.getName())
+                .description(group.getDescription())
                 .build();
 
         return Header.OK(groupApiResponse);
